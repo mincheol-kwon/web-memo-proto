@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import MemoTemplate from './components/MemoTemplate';
 import MemoHead from './components/MemoHead';
 import MemoList from './components/MemoList';
-import MemoCreate from './components/MemoCreate';
 import { MemoProvider } from './MemoContext';
 
 const GlobalStyle = createGlobalStyle`
@@ -18,7 +17,6 @@ function App() {
       <GlobalStyle />
       <MemoTemplate>
         <MemoHead />
-        <MemoCreate />
         <MemoList />
       </MemoTemplate>
     </MemoProvider>
