@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import MemoTemplate from './components/MemoTemplate';
 import MemoHead from './components/MemoHead';
@@ -12,9 +12,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  useEffect(() => {
-    localStorage.setItem('local', JSON.stringify());
-  }, []);
   return (
     <MemoProvider>
       <GlobalStyle />

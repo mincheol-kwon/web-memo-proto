@@ -1,13 +1,10 @@
-import React, { createContext, useContext, useReducer, useRef } from 'react';
-
-const initialMemos = [
-  {
-    id: 1,
-    name: '나',
-    text: '테스트용',
-    color: 'FED3DC',
-  },
-];
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react';
 
 function memoReducer(state, action) {
   switch (action.type) {
@@ -15,6 +12,8 @@ function memoReducer(state, action) {
       return state.concat(action.memo);
     case 'REMOVE':
       return state.filter((memo) => memo.id !== action.id);
+    case 'UPDATE':
+      return action.newstate;
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -25,8 +24,25 @@ const MemoDispatchContext = createContext();
 const MemoNextIdContext = createContext();
 
 export function MemoProvider({ children }) {
+  const rawItems = localStorage.getItem('local');
+  const items = JSON.parse(rawItems);
+
+  const initialMemos =
+    rawItems !== null
+      ? items
+      : {
+          id: 1,
+          name: '나',
+          text: '테스트용',
+          color: 'FED3DC',
+        };
+
   const [state, dispatch] = useReducer(memoReducer, initialMemos);
   const nextId = useRef(2);
+  console.log(initialMemos);
+  useEffect(() => {
+    localStorage.setItem('local', JSON.stringify(state));
+  }, [state]);
 
   return (
     <MemoStateContext.Provider value={state}>
