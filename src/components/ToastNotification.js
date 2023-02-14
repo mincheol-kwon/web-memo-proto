@@ -34,7 +34,7 @@ function ToastNotification(props) {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [props]);
 
   return (
     <ToastAlert>
