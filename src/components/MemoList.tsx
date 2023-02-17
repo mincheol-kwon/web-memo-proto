@@ -4,7 +4,7 @@ import MemoItem from './MemoItem';
 import { useMemoState } from '../MemoContext';
 import MemoColorButton from './MemoColorButton';
 
-const MemoListBlock = styled.div`
+const MemoListBlock = styled.div<{ column: number }>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.column}, 1fr);
 `;
@@ -17,7 +17,7 @@ const ButtonGroup = styled.div`
 
 function MemoList() {
   const memos = useMemoState();
-  const [column, setColumns] = useState(1);
+  const [column, setColumns] = useState<number>(1);
   return (
     <ThemeProvider
       theme={{

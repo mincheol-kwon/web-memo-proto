@@ -25,7 +25,7 @@ const ToastAlert = styled.div`
   }
 `;
 
-function ToastNotification(props) {
+function ToastNotification(props: any) {
   useEffect(() => {
     let timer = setTimeout(() => {
       props.setToastState(false);

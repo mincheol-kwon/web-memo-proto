@@ -54,7 +54,7 @@ function MemoCreate() {
   const dispatch = useMemoDispatch();
   const nextId = useMemoNextId();
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
@@ -62,7 +62,7 @@ function MemoCreate() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: any) => {
     e.preventDefault();
 
     if (name === '' || text === '') {

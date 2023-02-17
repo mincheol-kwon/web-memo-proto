@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function App() {
+const App: React.FC = () => {
   return (
     <MemoProvider>
       <GlobalStyle />
@@ -21,6 +21,6 @@ function App() {
       </MemoTemplate>
     </MemoProvider>
   );
-}
+};
 
 export default App;

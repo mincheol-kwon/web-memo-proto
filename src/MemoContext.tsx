@@ -4,32 +4,39 @@ import React, {
   useEffect,
   useReducer,
   useRef,
+  Dispatch,
+  MutableRefObject,
 } from 'react';
 
-function memoReducer(state, action) {
+export type Memo = { id: number; name: string; text: string; color: string };
+
+export type Action =
+  | { type: 'CREATE'; memo: Memo }
+  | { type: 'REMOVE'; id: number };
+
+type MemoDispatch = Dispatch<Action>;
+
+function memoReducer(memos: Memo[], action: Action) {
   switch (action.type) {
     case 'CREATE':
-      return state.concat(action.memo);
+      return memos.concat(action.memo);
     case 'REMOVE':
-      return state.filter((memo) => memo.id !== action.id);
-    case 'UPDATE':
-      return action.newstate;
+      return memos.filter((memo) => memo.id !== action.id);
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type`);
   }
 }
 
-const MemoStateContext = createContext();
-const MemoDispatchContext = createContext();
-const MemoNextIdContext = createContext();
+const MemoStateContext = createContext<Memo[] | null>(null);
+const MemoDispatchContext = createContext<MemoDispatch | null>(null);
+const MemoNextIdContext = createContext<MutableRefObject<number> | null>(null);
 
-export function MemoProvider({ children }) {
-  const rawItems = localStorage.getItem('local');
-  const items = JSON.parse(rawItems);
+export function MemoProvider({ children }: { children: React.ReactNode }) {
+  const rawItems: string | null = localStorage.getItem('local');
 
   const initialMemos =
     rawItems !== null
-      ? items
+      ? JSON.parse(rawItems)
       : {
           id: 1,
           name: '나',
@@ -38,7 +45,7 @@ export function MemoProvider({ children }) {
         };
 
   const [state, dispatch] = useReducer(memoReducer, initialMemos);
-  const nextId = useRef(2);
+  const nextId = useRef(initialMemos.length + 1);
   console.log(initialMemos);
   useEffect(() => {
     localStorage.setItem('local', JSON.stringify(state));

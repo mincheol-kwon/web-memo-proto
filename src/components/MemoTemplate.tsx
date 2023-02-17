@@ -17,7 +17,7 @@ const MemoTemplateBlock = styled.div`
   overflow-y: auto;
 `;
 
-function MemoTemplate({ children }) {
+function MemoTemplate({ children }: { children: React.ReactNode }) {
   return <MemoTemplateBlock>{children}</MemoTemplateBlock>;
 }
 

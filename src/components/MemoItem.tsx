@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdDelete } from 'react-icons/md';
-import { useMemoDispatch } from '../MemoContext';
+import { useMemoDispatch, Memo } from '../MemoContext';
 
 const Remove = styled.div`
   color: #dee2e6;
@@ -39,7 +39,7 @@ const Name = styled.div`
   color: #495057;
 `;
 
-function MemoItem({ id, name, text, color }) {
+function MemoItem({ id, name, text, color }: Memo) {
   const dispatch = useMemoDispatch();
   const onRemove = () => dispatch({ type: 'REMOVE', id });
   return (
