@@ -95,9 +95,7 @@ function MemoCreate() {
           value={text}
         />
       </InsertForm>
-      {toastState === true ? (
-        <ToastNotification setToastState={setToastState} />
-      ) : null}
+      {toastState ? <ToastNotification setToastState={setToastState} /> : null}
       <ThemeProvider
         theme={{
           palette: {
