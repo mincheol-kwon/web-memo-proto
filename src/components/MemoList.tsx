@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import MemoItem from './MemoItem';
-import { useMemoState } from '../MemoContext';
+import { Memo } from '../modules/Memo';
 import MemoColorButton from './MemoColorButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../modules';
 
 const MemoListBlock = styled.div<{ column: number }>`
   display: grid;
@@ -16,7 +18,9 @@ const ButtonGroup = styled.div`
 `;
 
 function MemoList() {
-  const memos = useMemoState();
+  const memos: Memo[] = useSelector<RootState, Memo[]>(
+    (state) => state.memoReducer,
+  );
   const [column, setColumns] = useState<number>(1);
   return (
     <ThemeProvider

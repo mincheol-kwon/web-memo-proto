@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMemoState } from '../MemoContext';
 import MemoCreate from './MemoCreate';
+import type { Memo } from '../modules/Memo';
+import { useSelector } from 'react-redux';
+import { RootState } from '../modules';
 
 const MemoHeadBlock = styled.div`
   display: flex;
@@ -27,7 +29,9 @@ const MemoHeadBlock = styled.div`
 `;
 
 function MemoHead() {
-  const memos = useMemoState();
+  const memos: Memo[] = useSelector<RootState, Memo[]>(
+    (state) => state.memoReducer,
+  );
   return (
     <MemoHeadBlock>
       <h1>

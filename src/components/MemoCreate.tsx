@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
-import { useMemoDispatch, useMemoNextId } from '../MemoContext';
+import { addMemo, Inputs } from '../modules/Memo';
 import MemoColorButton from './MemoColorButton';
 import ToastNotification from './ToastNotification';
 
@@ -41,20 +42,19 @@ const ButtonGroup = styled.div`
 `;
 
 function MemoCreate() {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<Inputs>({
     name: '',
     text: '',
     color: 'FED3DC',
   });
 
-  const [toastState, setToastState] = useState(false);
+  const [toastState, setToastState] = useState<boolean>(false);
 
   const { name, text, color } = inputs;
 
-  const dispatch = useMemoDispatch();
-  const nextId = useMemoNextId();
+  const dispatch = useDispatch();
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
@@ -62,27 +62,18 @@ function MemoCreate() {
     });
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (name === '' || text === '') {
       setToastState(true);
     } else {
-      dispatch({
-        type: 'CREATE',
-        memo: {
-          id: nextId.current,
-          name: name,
-          text: text,
-          color: color,
-        },
-      });
+      dispatch(addMemo(inputs));
       setInputs({
         ...inputs,
         name: '',
         text: '',
       });
-      nextId.current += 1;
     }
   };
 
